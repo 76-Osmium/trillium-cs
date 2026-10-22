@@ -12,9 +12,10 @@ import asyncio
 import pygame
 wow = True
 WIDTH, HEIGHT = 6400, 4000
+global screen
 
 def off():
-    pygame.draw.circle(screen,(0,0,0),(WIDTH // 2,HEIGHT // 2),300)
+    pygame.draw.circle(screen,(0,0,0),(WIDTH // 2,HEIGHT // 2),30)
 
 async def main():
     pygame.init()
@@ -28,7 +29,7 @@ async def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-         if wow == False:
+        if wow == False:
             off()       
         keys = pygame.key.get_pressed()
         if keys[pygame.K_PERIOD]:
