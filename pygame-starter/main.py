@@ -8,40 +8,36 @@ The only rule for browser-friendly Pygame: the game loop is `async` and
 calls `await asyncio.sleep(0)` once per frame. Everything else is ordinary
 Pygame. On a real desktop the same file runs with `python main.py`.
 """
-import asyncio
-import pygame
-wow = True
-WIDTH, HEIGHT = 6400, 4000
-global screen
-
-def off():
-    pygame.draw.circle(screen,(0,0,0),(WIDTH // 2,HEIGHT // 2),30)
-
+# this file draws a black screen on the browser with a set number of pixels, sets the tick speed, and refreshes the screen. The variables used are: (Width:X pixels,Height:Y pixels,Screen:
+import asyncio 
+# only here for sleep comand.
+import pygame 
+# allows for draw commands
+import crashscreen  
+# shows errors on the game screen and in the terminal
+WIDTH, HEIGHT = 640, 400
+# pixels on the screen
 async def main():
     pygame.init()
     screen = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Trillium starter")
     clock = pygame.time.Clock()
-    x, y, speed = WIDTH // 20, HEIGHT // 20, 40
     running = True
 
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                running = False
-        if wow == False:
-            off()       
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_PERIOD]:
-            wow = not wow
-        
+                running = False   
 
-        screen.fill((125, 225, 125))
-        clock.tick(600)
-        await asyncio.sleep(0)  # hands control to the browser once per frame
+        screen.fill((225, 225, 225))
+        # fills screen with chosen color (black)
+        pygame.display.flip()
+        # resets the screen
+        clock.tick(60)
+        # tick every 60 milliseconds
+        await asyncio.sleep(0)  
 
     pygame.quit()
 
-#wow this at home?
-asyncio.run(main())
+asyncio.run(crashscreen.guard(main))
 
